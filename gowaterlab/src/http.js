@@ -1,8 +1,12 @@
 import axios from 'axios'
 
-const $http = axios.create({
-  baseURL: process.env.VUE_APP_API
-})
+const customerAPI = axios.create({
+  baseURL: `/api/${customerUrl}`,
+  headers: {
+    "Content-Type": "application/json",
+    accept: "application/json",
+  },
+});
 
 // 攔截請求
 $http.interceptors.request.use(config => {
@@ -11,5 +15,5 @@ $http.interceptors.request.use(config => {
     return config
   }, error => {
     return Promise.reject(error)
-  })
+})
 
