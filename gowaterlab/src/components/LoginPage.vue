@@ -22,7 +22,7 @@
                                 </div>
 
                                 <div class="d-grid gap-2">
-                                    <button class="btn btn-outline-light" type="button">Login</button>
+                                    <button @click="loginFunc" class="btn btn-outline-light" type="button">Login</button>
                                     <button class="btn btn-outline-light" type="button">Login with google</button>
                                 </div>
 
@@ -38,9 +38,26 @@
 
 <script>
 
+import {loginAction} from '@/http'
+
 export default {
+
     setup() {
         
+        const loginFunc = () =>{
+            loginAction(JSON.stringify({username:'xuan',password:'123'}))
+            .then(suc => {
+                console.log(suc.data);
+            })
+            .catch(fail => {
+                console.log(fail.response.data);
+            })
+        }
+
+        return {
+            loginFunc
+        }
+
     }
 }
 </script>
