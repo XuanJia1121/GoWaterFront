@@ -21,8 +21,12 @@
                                     <label class="form-label mt-2" for="typePasswordX">Password</label>
                                 </div>
 
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong></strong> 請重新登入！
+                                </div>
+
                                 <div class="d-grid gap-2">
-                                    <button @click="loginFunc" class="btn btn-outline-light" type="button">Login</button>
+                                    <button class="btn btn-outline-light" type="button">Login</button>
                                     <button class="btn btn-outline-light" type="button">Login with google</button>
                                 </div>
 
@@ -38,24 +42,22 @@
 
 <script>
 
-import {loginAction} from '@/http'
+import { useStore } from "@/store/index";
+import { storeToRefs } from "pinia";
+import { ref } from 'vue'
+import $ from 'jquery';
 
 export default {
 
     setup() {
         
-        const loginFunc = () =>{
-            loginAction(JSON.stringify({username:'xuan',password:'123'}))
-            .then(suc => {
-                console.log(suc.data);
-            })
-            .catch(fail => {
-                console.log(fail.response.data);
-            })
-        }
+        const myStore = useStore();
+        const { loginMsg } = storeToRefs(myStore);
+
+        
 
         return {
-            loginFunc
+           
         }
 
     }
@@ -64,7 +66,7 @@ export default {
 
 <style scoped>
 .gradient-custom {
-    /* fallback for old browsers */
+    /* fallback for old browsers */ 
     background: #6a11cb;
 
     /* Chrome 10-25, Safari 5.1-6 */

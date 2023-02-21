@@ -8,7 +8,7 @@ const customerAPI = axios.create({
   },
 });
 
-export const loginAction = (customerJsonStr) => {
+export const apiLoginAction = (customerJsonStr) => {
   return customerAPI.post('/loginAction',customerJsonStr);
 };
 

@@ -1,23 +1,17 @@
-import { createStore } from 'vuex'
+import { defineStore } from 'pinia';
 
-export default createStore({
-  state: {
-    customer:{}
-  },
+export const useStore = defineStore('customerStore',{
 
+  state: () => ({
+    loginMsg:'hello pinia'
+  }),
+  
   getters: {
-
-  },
-
-  mutations: {
-
+    showloginMsg: (state) => state.loginMsg
   },
 
   actions: {
-
+    
   },
 
-  modules: {
-    
-  }
-})
+});
