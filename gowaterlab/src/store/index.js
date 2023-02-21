@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
+import { apiLoginAction } from '@/http'
+
 
 export const useStore = defineStore('customerStore',{
 
   state: () => ({
-    loginMsg:'hello pinia'
+    
   }),
   
   getters: {
@@ -11,7 +13,12 @@ export const useStore = defineStore('customerStore',{
   },
 
   actions: {
-    
+    loginAction:(data)=>{
+      return apiLoginAction(JSON.stringify(data));
+    },
+    setJwtToken:(token)=>{
+      localStorage.setItem('myToken',token);
+    }
   },
 
 });

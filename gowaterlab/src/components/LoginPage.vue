@@ -21,12 +21,12 @@
                                     <label class="form-label mt-2" for="typePasswordX">Password</label>
                                 </div>
 
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong></strong> 請重新登入！
+                                <div class="form-outline form-white mb-1">
+                                    <label class="form-label text-danger">{{loginMsg}}</label>
                                 </div>
 
                                 <div class="d-grid gap-2">
-                                    <button class="btn btn-outline-light" type="button">Login</button>
+                                    <button @click="loginFunction" class="btn btn-outline-light" type="button">Login</button>
                                     <button class="btn btn-outline-light" type="button">Login with google</button>
                                 </div>
 
@@ -45,19 +45,34 @@
 import { useStore } from "@/store/index";
 import { storeToRefs } from "pinia";
 import { ref } from 'vue'
-import $ from 'jquery';
 
 export default {
 
     setup() {
         
+        //login ret msg
+        const loginMsg = ref('');
+        //all store
         const myStore = useStore();
-        const { loginMsg } = storeToRefs(myStore);
+        //action
+        const { loginAction,setJwtToken }  = myStore;
 
-        
+        const loginFunction = ()=> {
+            loginAction({username:'Meow',password:'12345'})
+            .then(res => {
+                //login success and set token
+                setJwtToken(res.data);
+                console.log(res.data);
+            })
+            .catch(err => {
+                //login fail and set msg
+                loginMsg.value = err.response.data;
+            })
+        }
 
         return {
-           
+            loginFunction,
+            loginMsg
         }
 
     }
