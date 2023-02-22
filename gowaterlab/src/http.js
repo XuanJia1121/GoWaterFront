@@ -12,10 +12,10 @@ export const apiLoginAction = (customerJsonStr) => {
   return customerAPI.post('/loginAction',customerJsonStr);
 };
 
+// 攔截請求set token
 /*
-// 攔截請求
 $http.interceptors.request.use(config => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('myToken')
     config.headers.Authorization = `Bearer ${token}`
     return config
   }, error => {

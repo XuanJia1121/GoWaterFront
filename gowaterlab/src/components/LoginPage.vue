@@ -26,9 +26,9 @@
                                 </div>
 
                                 <div class="d-grid gap-2">
-                                    <button @click="loginFunction" class="btn btn-outline-light"
-                                        type="button">Login</button>
+                                    <button @click="loginFunction" class="btn btn-outline-light" type="button">Login</button>
                                     <button class="btn btn-outline-light" type="button">Login with google</button>
+                                    <button @click="toHomeFunction" class="btn btn-outline-light" type="button">back</button>
                                 </div>
                             </div>
                         </div>
@@ -44,6 +44,7 @@
 import { useStore } from "@/store/index";
 import { storeToRefs } from "pinia";
 import { reactive, ref } from 'vue'
+import { useRouter } from "vue-router";
 
 export default {
 
@@ -56,6 +57,12 @@ export default {
         const myStore = useStore();
         //action
         const { loginAction, setJwtToken } = myStore;
+        //vue router
+        const router = useRouter();
+        //to cart page 
+        const toHomeFunction = ()=> {
+            router.push({name:'home'});
+        }
 
         const loginFunction = () => {
             if (!loginValid()) return;
@@ -65,12 +72,10 @@ export default {
                     setJwtToken(res.data);
                     myStore.$patch({ isLogin: true });
                     loginMsg.value = '';
-                    console.log(myStore.isLogin);
                 })
                 .catch(err => {
                     //login fail and set msg
                     loginMsg.value = err.response.data;
-                    console.log(err);
                 })
         }
 
@@ -87,8 +92,8 @@ export default {
             return (!str || str.length === 0);
         }
         
-
         return {
+            toHomeFunction,
             loginFunction,
             loginDto,
             loginMsg
