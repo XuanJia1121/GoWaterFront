@@ -5,7 +5,7 @@ import { apiLoginAction } from '@/http'
 export const useStore = defineStore('customerStore',{
 
   state: () => ({
-    
+    isLogin:false,
   }),
   
   getters: {
@@ -18,6 +18,9 @@ export const useStore = defineStore('customerStore',{
     },
     setJwtToken:(token)=>{
       localStorage.setItem('myToken',token);
+    },
+    removeJwtToken:()=>{
+      localStorage.removeItem('myToken');
     }
   },
 
