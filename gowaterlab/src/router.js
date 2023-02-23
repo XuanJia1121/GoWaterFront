@@ -3,7 +3,7 @@ import { createRouter , createWebHistory } from 'vue-router'
 
 const requireAuth = (to, from, next) => {
   if (to.meta.auth) {
-    const token = localStorage.getItem('yToken');
+    const token = sessionStorage.getItem('myToken');
     if (token) {
       alert('i got a token');
       next();

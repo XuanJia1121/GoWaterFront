@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const customerAPI = axios.create({
-  baseURL: 'http://localhost:8087/customer/',
+const baseAPI = axios.create({
+  baseURL: 'http://localhost:8087/',
   headers: {
     "Content-Type": "application/json",
     accept: "application/json",
@@ -9,17 +9,27 @@ const customerAPI = axios.create({
 });
 
 export const apiLoginAction = (customerJsonStr) => {
-  return customerAPI.post('/loginAction',customerJsonStr);
+  return baseAPI.post('/customer/loginAction',customerJsonStr);
 };
 
+export const allProductAction = () => {
+  return baseAPI.post('/product/all');
+};
+
+
 // 攔截請求set token
-/*
-$http.interceptors.request.use(config => {
+baseAPI.interceptors.request.use(config => {
     const token = localStorage.getItem('myToken')
     config.headers.Authorization = `Bearer ${token}`
     return config
   }, error => {
     return Promise.reject(error)
 })
-*/
+
+// 攔截回復
+baseAPI.interceptors.response.use(res => {
+  res.data = JSON.stringify(res.data);
+  return res;
+})
+
 

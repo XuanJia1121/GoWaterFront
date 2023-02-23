@@ -72,6 +72,7 @@ export default {
                     setJwtToken(res.data);
                     myStore.$patch({ isLogin: true });
                     loginMsg.value = '';
+                    toHomeFunction();
                 })
                 .catch(err => {
                     //login fail and set msg
