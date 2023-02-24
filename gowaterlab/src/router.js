@@ -5,12 +5,9 @@ const requireAuth = (to, from, next) => {
   if (to.meta.auth) {
     const token = sessionStorage.getItem('myToken');
     if (token) {
-      alert('i got a token');
       next();
     } else {
-      next({
-        path:'/login'
-      });
+      next({path:'/login'});
     }
   } else {
     next();
@@ -25,7 +22,7 @@ const routes = [
     meta: {
       keepAlive: false,// 不需要缓存
       auth: false
-    }
+    }, 
   },
   {
     path: '/home',
@@ -34,7 +31,7 @@ const routes = [
     meta: {
       keepAlive: false, // 不需要缓存
       auth: false
-    }
+    },
   },
   {
     path: '/cart',
@@ -53,7 +50,8 @@ const routes = [
     meta: {
       keepAlive: false, // 不需要缓存
       auth: false
-    }
+    },
+    beforeEnter: requireAuth
   }
   // Add more routes here
 ]

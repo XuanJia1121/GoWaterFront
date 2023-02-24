@@ -1,11 +1,11 @@
 <template lang="">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!">Xuan Shop Lab</a>
+                <a class="navbar-brand">Xuan Shop Lab</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page">Home</a></li>
+                        <li class="nav-item"><a @click="toHomeFunction" class="nav-link active" aria-current="page">Home</a></li>
                     </ul>
                     <form class="d-flex">
                         <button @click="toCartFunction" class="btn btn-outline-dark" type="button">
@@ -40,14 +40,18 @@
                                 <div class="text-center">
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">{{p.name}}</h5>
-                                    <h5 class="fw-bolder mt-2">{{p.description}}</h5>
+                                    <h5 class="mt-2 text-warning">{{p.description}}</h5>
+                                </div>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="text-center">
                                     <!-- Product price-->
-                                    ${{p.price}}
+                                    <h4 class="text-danger">${{p.price}}</h4>
                                 </div>
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><button class="btn btn-outline-dark mt-auto">加入購物車</button></div>
+                                <div @click="addTocart(p)" class="text-center"><button class="btn btn-outline-dark mt-auto">加入購物車</button></div>
                             </div>
                         </div>
                     </div>
@@ -65,8 +69,7 @@
 
 import { useRouter } from "vue-router";
 import { useStore } from "@/store/index";
-import { onMounted , onBeforeMount ,reactive } from "vue";
-import { storeToRefs } from "pinia";
+import { onBeforeMount } from "vue";
 
 export default {
 
@@ -75,22 +78,29 @@ export default {
         //all store
         const myStore = useStore();
         //action
-        const { allProducts } = myStore;
+        const { allProducts , addTocart } = myStore;
         //vue router
         const router = useRouter();
         //to cart page 
-        const toCartFunction = ()=> {
-            router.push({name:'cart'});
+        const toCartFunction = () => {
+            router.push({ name: 'cart' });
         }
+        //to home Page
+        const toHomeFunction = () => {
+            router.push({ name: 'home' });
+        }
+        //add to cart
 
-        onMounted(async ()=>{
-            const product = await allProducts();
-            myStore.$patch({'products': product});
+
+        onBeforeMount(async () => {
+            await allProducts();
         })
 
         return {
             myStore,
-            toCartFunction
+            toHomeFunction,
+            toCartFunction,
+            addTocart
         }
 
     }

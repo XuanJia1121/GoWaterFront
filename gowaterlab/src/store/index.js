@@ -7,6 +7,7 @@ export const useStore = defineStore('customerStore', {
   state: () => ({
     isLogin: false,
     products: [],
+    cart: []
   }),
 
   getters: {
@@ -29,18 +30,32 @@ export const useStore = defineStore('customerStore', {
 
 
     //商品相關
+    setProducts(products){
+      this.products = products;
+    },
     allProducts() {
       return new Promise(async(resolve, reject)=>{
         const response = await allProductAction();
-        resolve(JSON.parse(response.data));
-        console.log('find product finish');
+        this.setProducts(JSON.parse(response.data));
+        resolve();
       })
+    },
+    addTocart(product){
+      let itemIndex = this.cart.findIndex(item => item.id === product.id);
+      if (itemIndex !== -1) {
+        // Product is already in cart, update quantity
+        this.cart[itemIndex].count += 1;
+      } else {
+        // Product is not in cart, add to cart
+        product.count = 1;
+        this.cart.push(product);
+      }
     }
 
   },
 
   persist: {
-    enabled: true, // 这个配置代表存储生效，而且是整个store都存储
+    enabled: true,
   }
 
 });
