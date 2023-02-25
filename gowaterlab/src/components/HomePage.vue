@@ -89,8 +89,6 @@ export default {
         const toHomeFunction = () => {
             router.push({ name: 'home' });
         }
-        //add to cart
-
 
         onBeforeMount(async () => {
             await allProducts();

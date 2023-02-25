@@ -12,7 +12,8 @@ export const useStore = defineStore('customerStore', {
 
   getters: {
     showloginMsg: (state) => state.loginMsg,
-    getAllProduct: (state) => state.products
+    getAllProduct: (state) => state.products,
+    getCart: (state) => state.cart
   },
 
   actions: {
