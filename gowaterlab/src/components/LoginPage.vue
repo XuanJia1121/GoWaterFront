@@ -42,21 +42,18 @@
 <script>
 
 import { useStore } from "@/store/index";
-import { storeToRefs } from "pinia";
-import { reactive, ref } from 'vue'
+import { reactive,ref } from 'vue'
 import { useRouter } from "vue-router";
+import { login,setToken } from '../hooks/useCustomer'
 
 export default {
 
     setup() {
 
+        const myStore = useStore();
         const loginDto = reactive({ username: '', password: '' });
         //login ret msg
         const loginMsg = ref('');
-        //all store
-        const myStore = useStore();
-        //action
-        const { loginAction, setJwtToken } = myStore;
         //vue router
         const router = useRouter();
         //to cart page 
@@ -66,17 +63,17 @@ export default {
 
         const loginFunction = () => {
             if (!loginValid()) return;
-            loginAction(loginDto)
+            login(loginDto)
                 .then(res => {
                     //login success and set token
-                    setJwtToken(res.data);
+                    setToken(res.data);
                     myStore.$patch({ isLogin: true });
                     loginMsg.value = '';
                     toHomeFunction();
                 })
                 .catch(err => {
                     //login fail and set msg
-                    loginMsg.value = err.response.data;
+                    loginMsg.value = err.responese.data;
                 })
         }
 

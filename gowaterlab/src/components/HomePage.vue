@@ -51,7 +51,7 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div @click="addTocart(p)" class="text-center"><button class="btn btn-outline-dark mt-auto">加入購物車</button></div>
+                                <div @click="addToCart(p)" class="text-center"><button class="btn btn-outline-dark mt-auto">加入購物車</button></div>
                             </div>
                         </div>
                     </div>
@@ -62,14 +62,14 @@
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; My Lab 2023</p></div>
         </footer>
-        <h3>{{products}}</h3>
 </template>
 
 <script>
 
 import { useRouter } from "vue-router";
 import { useStore } from "@/store/index";
-import { onBeforeMount } from "vue";
+import { onBeforeMount , onMounted } from "vue";
+import { addToCart , initProduct } from '../hooks/useProduct'
 
 export default {
 
@@ -77,8 +77,6 @@ export default {
 
         //all store
         const myStore = useStore();
-        //action
-        const { allProducts , addTocart } = myStore;
         //vue router
         const router = useRouter();
         //to cart page 
@@ -91,14 +89,14 @@ export default {
         }
 
         onBeforeMount(async () => {
-            await allProducts();
+            await initProduct();
         })
 
         return {
             myStore,
             toHomeFunction,
             toCartFunction,
-            addTocart
+            addToCart
         }
 
     }
