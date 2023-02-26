@@ -2,19 +2,9 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
                 <a class="navbar-brand">Xuan Shop Lab</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a @click="toHomeFunction" class="nav-link active" aria-current="page">Home</a></li>
-                    </ul>
-                    <form class="d-flex">
-                        <button @click="toCartFunction" class="btn btn-outline-dark" type="button">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
-                </div>
+                <button @click="toCartFunction" class="btn btn-primary" aria-current="page" >Cart
+                    <span v-if="myStore.cart.length > 0" class="text-danger font-weight-bold">{{myStore.cart.length}}</span> 
+                </button>
             </div>
         </nav>
         <!-- Header-->
@@ -62,14 +52,30 @@
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; My Lab 2023</p></div>
         </footer>
+
+        <!--toast -->
+        <div class="toast-container position-static">
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img class="rounded me-2" alt="...">
+                    <strong class="me-auto">Bootstrap</strong>
+                    <small class="text-muted">just now</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    See? Just like this.
+                </div>
+            </div>
+        </div>
+
 </template>
 
 <script>
 
 import { useRouter } from "vue-router";
 import { useStore } from "@/store/index";
-import { onBeforeMount , onMounted } from "vue";
-import { addToCart , initProduct } from '../hooks/useProduct'
+import { onBeforeMount, onMounted } from "vue";
+import { addToCart, initProduct } from '../hooks/useProduct'
 
 export default {
 

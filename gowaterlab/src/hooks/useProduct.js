@@ -15,6 +15,11 @@ export function addToCart(product) {
     }
 }
 
+export function removeFromCart(id){
+    const myStore = useStore();
+    myStore.cart = myStore.cart.filter(p => p.id != id);
+}
+
 export function initProduct(){
     const myStore = useStore();
     return new Promise(async(resolve, reject)=>{
