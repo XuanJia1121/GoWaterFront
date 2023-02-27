@@ -52,6 +52,16 @@ const routes = [
       auth: false
     },
     beforeEnter: requireAuth
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: ()=> import('@/components/CustomerPage.vue'),
+    meta: {
+      keepAlive: false, // 不需要缓存
+      auth: true
+    },
+    beforeEnter: requireAuth
   }
   // Add more routes here
 ]

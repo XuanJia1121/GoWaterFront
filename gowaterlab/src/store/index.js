@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 export const useStore = defineStore('customerStore', {
 
   state: () => ({
+    customer:{},
     isLogin: false,
     products: [],
     cart: []

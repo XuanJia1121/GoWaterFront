@@ -1,10 +1,15 @@
 <template lang="">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container px-4 px-lg-5">
+            <div class="container px-4 px-lg-10">
                 <a class="navbar-brand">Xuan Shop Lab</a>
-                <button @click="toCartFunction" class="btn btn-primary" aria-current="page" >Cart
-                    <span v-if="myStore.cart.length > 0" class="text-danger font-weight-bold">{{myStore.cart.length}}</span> 
-                </button>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <button @click="toCartFunction" class="btn btn-primary" aria-current="page" >Cart
+                                <span v-if="myStore.cart.length > 0" class="text-danger font-weight-bold">{{myStore.cart.length}}</span> 
+                        </button>
+                        <button @click="toUserFunction" type="button" class="btn btn-secondary">Xuan</button>
+                    </div>
+                </div>
             </div>
         </nav>
         <!-- Header-->
@@ -41,7 +46,7 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div @click="addToCart(p)" class="text-center"><button class="btn btn-outline-dark mt-auto">加入購物車</button></div>
+                                <div @click="addToCart(p);addAlert(p)" class="text-center"><button class="btn btn-outline-dark mt-auto">加入購物車</button></div>
                             </div>
                         </div>
                     </div>
@@ -53,21 +58,6 @@
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; My Lab 2023</p></div>
         </footer>
 
-        <!--toast -->
-        <div class="toast-container position-static">
-            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <img class="rounded me-2" alt="...">
-                    <strong class="me-auto">Bootstrap</strong>
-                    <small class="text-muted">just now</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    See? Just like this.
-                </div>
-            </div>
-        </div>
-
 </template>
 
 <script>
@@ -75,7 +65,7 @@
 import { useRouter } from "vue-router";
 import { useStore } from "@/store/index";
 import { onBeforeMount, onMounted } from "vue";
-import { addToCart, initProduct } from '../hooks/useProduct'
+import { addToCart , initProduct , addAlert } from '../hooks/useProduct'
 
 export default {
 
@@ -93,16 +83,23 @@ export default {
         const toHomeFunction = () => {
             router.push({ name: 'home' });
         }
+        //to personal page
+        const toUserFunction = () => {
+            router.push({ name: 'user' });
+        }
 
         onBeforeMount(async () => {
             await initProduct();
         })
 
+
         return {
             myStore,
             toHomeFunction,
             toCartFunction,
-            addToCart
+            toUserFunction,
+            addToCart,
+            addAlert
         }
 
     }

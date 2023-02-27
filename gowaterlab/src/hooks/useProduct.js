@@ -20,11 +20,15 @@ export function removeFromCart(id){
     myStore.cart = myStore.cart.filter(p => p.id != id);
 }
 
-export function initProduct(){
+export function initProduct() {
     const myStore = useStore();
     return new Promise(async(resolve, reject)=>{
         const response = await allProductAction();
         myStore.products = (JSON.parse(response.data));
         resolve();
       })
+}
+
+export function addAlert(product){
+    alert(`${product.name} 已加入購物車`);
 }
