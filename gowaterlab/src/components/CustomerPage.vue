@@ -12,10 +12,10 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h3 class="fw-normal mb-0 text-black">個人資料</h3>
                     </div>
-                    <div class="card" style="width: 18rem;">
+                    <div class="card" style="width: 25rem;">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Username：123</li>
-                            <li class="list-group-item">Email：１２３４５</li>
+                            <li class="list-group-item">Username：{{myStore.customer.username}}</li>
+                            <li class="list-group-item">Email：{{myStore.customer.email}}</li>
                         </ul>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h3 class="fw-normal mb-0 text-black">我的訂單</h3>
                     </div>
-                    <div class="card" style="width: 18rem;">
+                    <div class="card" style="width: 25rem;">
                         <ul class="list-group list-group-flush">
                             <li @click="" class="list-group-item btn btn-info">訂單1</li>
                         </ul>
@@ -76,11 +76,14 @@
 <script>
 
 import { useRouter } from "vue-router";
+import { useStore } from "@/store";
 
 export default {
 
     setup() {
 
+        //store
+        const myStore = useStore();
         //vue router
         const router = useRouter();
         //to Home Page
@@ -89,6 +92,7 @@ export default {
         }
 
         return {
+            myStore,
             toHomeFunction,
         }
 

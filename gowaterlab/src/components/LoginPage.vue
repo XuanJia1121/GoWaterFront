@@ -26,9 +26,11 @@
                                 </div>
 
                                 <div class="d-grid gap-2">
-                                    <button @click="loginFunction" class="btn btn-outline-light" type="button">Login</button>
+                                    <button @click="loginFunction" class="btn btn-outline-light"
+                                        type="button">Login</button>
                                     <button class="btn btn-outline-light" type="button">Login with google</button>
-                                    <button @click="toHomeFunction" class="btn btn-outline-light" type="button">back</button>
+                                    <button @click="toHomeFunction" class="btn btn-outline-light"
+                                        type="button">back</button>
                                 </div>
                             </div>
                         </div>
@@ -42,9 +44,9 @@
 <script>
 
 import { useStore } from "@/store/index";
-import { reactive,ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
-import { login,setToken } from '../hooks/useCustomer'
+import { login, setToken } from '../hooks/useCustomer'
 
 export default {
 
@@ -57,17 +59,19 @@ export default {
         //vue router
         const router = useRouter();
         //to cart page 
-        const toHomeFunction = ()=> {
-            router.push({name:'home'});
+        const toHomeFunction = () => {
+            router.push({ name: 'home' });
         }
 
         const loginFunction = () => {
             if (!loginValid()) return;
             login(loginDto)
                 .then(res => {
-                    //login success and set token
-                    setToken(res.data);
+                    let customer = JSON.parse(res.data);
                     myStore.$patch({ isLogin: true });
+                    myStore.$patch({ customer: customer });
+                    //login success and set token
+                    setToken(customer.token);
                     loginMsg.value = '';
                     toHomeFunction();
                 })
@@ -89,7 +93,7 @@ export default {
         function isEmpty(str) {
             return (!str || str.length === 0);
         }
-        
+
         return {
             toHomeFunction,
             loginFunction,
@@ -112,5 +116,4 @@ export default {
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
 }
-
 </style>
