@@ -25,7 +25,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h3 class="fw-normal mb-0 text-black">我的訂單</h3>
                     </div>
-                    <div class="card" style="width: 25rem;">
+                    <div v-if="myStore.orders.length > 5" class="card" style="width: 25rem;">
                         <ul class="list-group list-group-flush">
                             <li @click="" class="list-group-item btn btn-info">訂單1</li>
                         </ul>
@@ -35,6 +35,9 @@
                         <ul class="list-group list-group-flush">
                             <li @click="" class="list-group-item btn btn-info">訂單3</li>
                         </ul>
+                    </div>
+                    <div v-else>
+                        <h5 class="text-danger">No Order</h5>
                     </div>
                 </div>
             </div>
@@ -77,6 +80,8 @@
 
 import { useRouter } from "vue-router";
 import { useStore } from "@/store";
+import { onBeforeMount } from "vue";
+import { initOrders } from '../hooks/useCustomer'
 
 export default {
 
@@ -90,6 +95,10 @@ export default {
         const toHomeFunction = () => {
             router.push({ name: 'home' });
         }
+
+        onBeforeMount(async () => {
+            await initOrders();
+        })
 
         return {
             myStore,

@@ -16,10 +16,13 @@ export const allProductAction = () => {
   return baseAPI.post('/product/all');
 };
 
+export const allOrders = (customer) => {
+  return baseAPI.post('/orders/allOrders',customer);
+}
 
 // 攔截請求set token
 baseAPI.interceptors.request.use(config => {
-    const token = localStorage.getItem('myToken')
+    const token = sessionStorage.getItem('myToken')
     config.headers.Authorization = `Bearer ${token}`
     return config
   }, error => {
