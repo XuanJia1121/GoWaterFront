@@ -1,5 +1,6 @@
 import { useStore } from "@/store/index";
 import { apiLoginAction , allOrders , addOrderAction } from '@/http'
+import { useRouter } from "vue-router";
 
 export function login(data){
     return apiLoginAction(JSON.stringify(data));
@@ -29,7 +30,10 @@ export function addOrder(order){
             cid:myStore.customer.cid,
             details:JSON.stringify(order)
         }
+        console.log(orderData);
         const response = await addOrderAction(JSON.stringify(orderData));
-        resolve();
+        myStore.cart = [];
+        initOrders();
+        resolve(response);
     })
 }

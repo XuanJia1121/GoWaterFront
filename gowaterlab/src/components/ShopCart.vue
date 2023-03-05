@@ -36,7 +36,7 @@
                     </div>
                     <div v-if="mystore.totalMoney > 0" class="card">
                         <div class="card-body">
-                            <button @click="addOrder(mystore.getCart)" type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay-Total：$
+                            <button @click="addOrderFunction(mystore.getCart)" type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay-Total：$
                                 <span class="text-danger">{{mystore.totalMoney}}</span>
                             </button>
                         </div>
@@ -71,12 +71,19 @@ export default {
         const toHomeFunction = ()=> {
             router.push({name:'home'});
         }
-        
+        //add order
+        const addOrderFunction = (order) => {
+            addOrder(order)
+                .then((res) => {
+                    router.push({name:'user'});
+                })
+        }
+
         return {
             mystore,
             removeFromCart,
             toHomeFunction,
-            addOrder
+            addOrderFunction
         }
 
     }
