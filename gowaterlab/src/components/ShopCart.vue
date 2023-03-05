@@ -36,7 +36,7 @@
                     </div>
                     <div v-if="mystore.totalMoney > 0" class="card">
                         <div class="card-body">
-                            <button type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay-Total：$
+                            <button @click="addOrder(mystore.getCart)" type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay-Total：$
                                 <span class="text-danger">{{mystore.totalMoney}}</span>
                             </button>
                         </div>
@@ -57,6 +57,7 @@
 import { useRouter } from "vue-router";
 import { useStore } from "@/store/index";
 import { removeFromCart } from '../hooks/useProduct'
+import { addOrder } from '../hooks/useCustomer'
 
 export default {
     
@@ -74,7 +75,8 @@ export default {
         return {
             mystore,
             removeFromCart,
-            toHomeFunction
+            toHomeFunction,
+            addOrder
         }
 
     }

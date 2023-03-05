@@ -20,6 +20,10 @@ export const allOrders = (customer) => {
   return baseAPI.post('/orders/allOrders',customer);
 }
 
+export const addOrderAction = (order) => {
+  return baseAPI.post('/orders/addOrder',order);
+}
+
 // 攔截請求set token
 baseAPI.interceptors.request.use(config => {
     const token = sessionStorage.getItem('myToken')

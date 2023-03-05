@@ -25,15 +25,9 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h3 class="fw-normal mb-0 text-black">我的訂單</h3>
                     </div>
-                    <div v-if="myStore.orders.length > 5" class="card" style="width: 25rem;">
-                        <ul class="list-group list-group-flush">
-                            <li @click="" class="list-group-item btn btn-info">訂單1</li>
-                        </ul>
-                        <ul class="list-group list-group-flush">
-                            <li @click="" class="list-group-item btn btn-info">訂單2</li>
-                        </ul>
-                        <ul class="list-group list-group-flush">
-                            <li @click="" class="list-group-item btn btn-info">訂單3</li>
+                    <div v-if="myStore.orders.length > 0" class="card" style="width: 25rem;">
+                        <ul v-for="(order,index) in myStore.orders.length" class="list-group list-group-flush">
+                            <li @click="showOrderDetail(index)" class="list-group-item btn btn-info">訂單{{index + 1}}</li>
                         </ul>
                     </div>
                     <div v-else>
@@ -43,33 +37,20 @@
             </div>
         </div>
     </section>
-    <div class="container h-100 py-5">
+    <div v-if="orderDetail.detail.length > 0" class="container h-100 py-5">
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">商品名稱</th>
+                    <th scope="col">數量</th>
+                    <th scope="col">價格</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
+                <tr v-for="p in orderDetail.detail">
+                    <td>{{p.name}}</td>
+                    <td>{{p.count}}</td>
+                    <td>$ {{p.price}}</td>
                 </tr>
             </tbody>
             </table>
@@ -80,13 +61,15 @@
 
 import { useRouter } from "vue-router";
 import { useStore } from "@/store";
-import { onBeforeMount } from "vue";
+import { onBeforeMount , reactive } from "vue";
 import { initOrders } from '../hooks/useCustomer'
 
 export default {
 
     setup() {
 
+        //orders
+        let orderDetail = reactive({detail:[]});
         //store
         const myStore = useStore();
         //vue router
@@ -94,6 +77,10 @@ export default {
         //to Home Page
         const toHomeFunction = () => {
             router.push({ name: 'home' });
+        }
+        //show order detail
+        const showOrderDetail = (index) => {
+            orderDetail.detail = (JSON.parse(myStore.orders[index].details));
         }
 
         onBeforeMount(async () => {
@@ -103,6 +90,8 @@ export default {
         return {
             myStore,
             toHomeFunction,
+            showOrderDetail,
+            orderDetail
         }
 
     }
