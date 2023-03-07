@@ -28,7 +28,7 @@
                                 <div class="d-grid gap-2">
                                     <button @click="loginFunction" class="btn btn-outline-light"
                                         type="button">Login</button>
-                                    <button class="btn btn-outline-light" type="button">Login with google</button>
+                                    <a href="http://localhost:8087/oauth2/authorization/google" class="btn btn-outline-light" type="button">Login with google</a>
                                     <button @click="toHomeFunction" class="btn btn-outline-light"
                                         type="button">back</button>
                                 </div>
@@ -62,7 +62,7 @@ export default {
         const toHomeFunction = () => {
             router.push({ name: 'home' });
         }
-
+        
         const loginFunction = () => {
             if (!loginValid()) return;
             login(loginDto)
