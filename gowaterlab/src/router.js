@@ -14,6 +14,10 @@ const requireAuth = (to, from, next) => {
   }
 }
 
+const oauthSuccess = (to, from, next) => {
+  next();
+}
+
 const routes = [
   {
     path: '/',
@@ -62,8 +66,18 @@ const routes = [
       auth: true
     },
     beforeEnter: requireAuth
+  },
+  {
+    path: '/oauth2/success',
+    name: 'oauth2',
+    component: ()=> import('@/components/HomePage.vue'),
+    meta: {
+      keepAlive: false, // 不需要缓存
+      auth: false
+    },
+    beforeEnter: oauthSuccess
   }
-  // Add more routes here
+  // Add more routes here   http://localhost:8080/oauth2/success
 ]
 
 const router = createRouter({
