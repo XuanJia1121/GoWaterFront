@@ -28,7 +28,7 @@
                                 <div class="d-grid gap-2">
                                     <button @click="loginFunction" class="btn btn-outline-light"
                                         type="button">Login</button>
-                                    <a href="http://localhost:8087/oauth2/authorization/google" class="btn btn-outline-light" type="button">Login with google</a>
+                                    <a @click="oauth" class="btn btn-outline-light" type="button">Login with google</a>
                                     <button @click="toHomeFunction" class="btn btn-outline-light"
                                         type="button">back</button>
                                 </div>
@@ -47,6 +47,7 @@ import { useStore } from "@/store/index";
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
 import { login, setToken } from '../hooks/useCustomer'
+import axios from "axios";
 
 export default {
 
@@ -77,7 +78,7 @@ export default {
                 })
                 .catch(err => {
                     //login fail and set msg
-                    loginMsg.value = err.responese.data;
+                    loginMsg.value = err.response.data;
                 })
         }
 
@@ -90,6 +91,12 @@ export default {
             }
         }
 
+        const oauth = () =>{
+            axios.get('http://localhost:8087/oauth2/authorization/google').then(res => {
+                console.log(res);
+            })
+        }
+
         function isEmpty(str) {
             return (!str || str.length === 0);
         }
@@ -98,7 +105,8 @@ export default {
             toHomeFunction,
             loginFunction,
             loginDto,
-            loginMsg
+            loginMsg,
+            oauth
         }
 
     }
