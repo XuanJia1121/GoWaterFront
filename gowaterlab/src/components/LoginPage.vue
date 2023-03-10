@@ -47,7 +47,7 @@ import { useStore } from "@/store/index";
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
 import { login, setToken } from '../hooks/useCustomer'
-import axios from "axios";
+import { oauth2 } from '../http'
 
 export default {
 
@@ -92,7 +92,7 @@ export default {
         }
 
         const oauth = () =>{
-            axios.get('http://localhost:8087/oauth2/authorization/google').then(res => {
+            oauth2().then(res => {
                 console.log(res);
             })
         }

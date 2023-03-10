@@ -24,6 +24,10 @@ export const addOrderAction = (order) => {
   return baseAPI.post('/orders/addOrder',order);
 }
 
+export const oauth2 = () => {
+  return baseAPI.post('/oauth2/authorization/google');
+}
+
 // 攔截請求set token
 baseAPI.interceptors.request.use(config => {
     const token = sessionStorage.getItem('myToken')
