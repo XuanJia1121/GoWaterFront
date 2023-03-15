@@ -25,7 +25,7 @@ export const addOrderAction = (order) => {
 }
 
 export const oauth2 = () => {
-  return baseAPI.post('/oauth2/authorization/google');
+  return baseAPI.get('/oauth2/authorization/google');
 }
 
 // 攔截請求set token

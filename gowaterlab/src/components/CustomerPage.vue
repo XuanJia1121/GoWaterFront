@@ -1,8 +1,8 @@
 <template lang="">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand">Xuan Shop Lab</a>
-                <button @click="toHomeFunction" class="btn btn-primary" aria-current="page" href="">Home</button>
+                <button @click="toHomeFunction" class="btn btn-primary" aria-current="page" href="">Xuan Shop Lab</button>
+                <button @click="logoutFunction" class="btn btn-info" aria-current="page" href="">Logout</button>
             </div>
     </nav>
     <section class="h-100" style="background-color: #eee ;">
@@ -62,7 +62,7 @@
 import { useRouter } from "vue-router";
 import { useStore } from "@/store";
 import { onBeforeMount , reactive } from "vue";
-import { initOrders } from '../hooks/useCustomer'
+import { initOrders , logout } from '../hooks/useCustomer'
 
 export default {
 
@@ -82,6 +82,11 @@ export default {
         const showOrderDetail = (index) => {
             orderDetail.detail = (JSON.parse(myStore.orders[index].details));
         }
+        //logout
+        const logoutFunction = () => {
+            logout();
+            toHomeFunction()
+        }
 
         onBeforeMount(async () => {
             await initOrders();
@@ -91,7 +96,8 @@ export default {
             myStore,
             toHomeFunction,
             showOrderDetail,
-            orderDetail
+            orderDetail,
+            logoutFunction
         }
 
     }
