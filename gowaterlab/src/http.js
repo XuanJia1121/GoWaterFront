@@ -13,11 +13,11 @@ export const apiLoginAction = (customerJsonStr) => {
 };
 
 export const allProductAction = () => {
-  return baseAPI.post('/product/all');
+  return baseAPI.get('/product/all');
 };
 
 export const allOrders = (customer) => {
-  return baseAPI.post('/orders/allOrders',customer);
+  return baseAPI.get('/orders/allOrders',customer);
 }
 
 export const addOrderAction = (order) => {
