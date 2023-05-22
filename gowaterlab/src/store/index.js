@@ -4,22 +4,16 @@ export const useStore = defineStore('customerStore', {
 
   state: () => ({
     customer: {},
-    orders: [],
-    isLogin: false,
     products: [],
-    cart: []
   }),
 
   getters: {
-    showloginMsg: (state) => state.loginMsg,
-    getAllProduct: (state) => state.products,
-    getCart: (state) => state.cart,
-    totalMoney: (state) => {
-      return state.cart.map(p => p.price * p.count).reduce((total, arg) => total + arg, 0);
-    }
+    
   },
 
-  actions: {},
+  actions: {
+    
+  },
 
   persist: {
     enabled: true,

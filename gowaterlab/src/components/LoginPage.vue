@@ -1,36 +1,34 @@
 <template>
-    <section class="vh-100 gradient-custom">
+
+    <section class="vh-100" style="background-color: rgb(152, 186, 214);">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                        <div class="card-body p-5 text-center">
-                            <div class="mb-md-5 mt-md-4 pb-5">
-                                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                                <p class="text-white-50 mb-5">Please enter your login and password!</p>
-
-                                <div class="form-outline form-white mb-4">
-                                    <input v-model="loginDto.username" type="email" id="typeEmailX"
-                                        class="form-control form-control-lg" />
-                                    <label class="form-label mt-2" for="typeEmailX">Username</label>
-                                </div>
-
-                                <div class="form-outline form-white mb-4">
-                                    <input v-model="loginDto.password" type="password" id="typePasswordX"
-                                        class="form-control form-control-lg" />
-                                    <label class="form-label mt-2" for="typePasswordX">Password</label>
-                                </div>
-
-                                <div class="form-outline form-white mb-1">
-                                    <label class="form-label text-danger">{{ loginMsg }}</label>
-                                </div>
-
-                                <div class="d-grid gap-2">
-                                    <button @click="loginFunction" class="btn btn-outline-light"
-                                        type="button">Login</button>
-                                    <a @click="oauth" class="btn btn-outline-light" type="button">Login with google</a>
-                                    <button @click="toHomeFunction" class="btn btn-outline-light"
-                                        type="button">back</button>
+                <div class="col col-xl-5">
+                    <div class="card" style="border-radius: 1rem;">
+                        <div class="loginPage row g-0">
+                            <div class="col-md-6 col-lg-10 d-flex align-items-center">
+                                <div class="card-body p-4 p-lg-5 text-black">
+                                    <form>
+                                        <div class="d-flex align-items-center mb-3 pb-1">
+                                            <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                                        </div>
+                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">使用者登入
+                                        </h5>
+                                        <div class="form-outline mb-4">
+                                            <input v-model="loginDto.username" type="email" class="form-control form-control-lg" />
+                                            <label class="form-label mt-1" for="form2Example17">使用者名稱</label>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <input v-model="loginDto.password" type="password" class="form-control form-control-lg" />
+                                            <label class="form-label mt-1" for="form2Example27">密碼</label>
+                                        </div>
+                                        <p v-if="loginMsg" class="mb-5 pb-lg-2 text-danger">{{ loginMsg }}</p>
+                                        <div class="pt-1 mb-4">
+                                            <button @click="loginFunction" class="btn btn-dark btn-lg btn-block" type="button">登入</button>
+                                        </div>
+                                        <a href="#!" class="small text-muted">Please Please</a>
+                                        <a href="#!" class="small text-muted">Please Please</a>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -39,6 +37,7 @@
             </div>
         </div>
     </section>
+
 </template>
 
 <script>
@@ -46,8 +45,7 @@
 import { useStore } from "@/store/index";
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
-import { login, setToken } from '../hooks/useCustomer'
-import { oauth2 } from '../http'
+import { login } from "../hooks/useCustomer"
 
 export default {
 
@@ -55,26 +53,16 @@ export default {
 
         const myStore = useStore();
         const loginDto = reactive({ username: '', password: '' });
-        //login ret msg
         const loginMsg = ref('');
-        //vue router
-        const router = useRouter();
-        //to cart page 
-        const toHomeFunction = () => {
-            router.push({ name: 'home' });
-        }
-        
+        const vueRouter = useRouter(); //vue router
+        const toHomeFunction = () => {vueRouter.push({ name: 'home' });} //to cart page
+
         const loginFunction = () => {
             if (!loginValid()) return;
+            alert(123);
             login(loginDto)
                 .then(res => {
-                    let customer = JSON.parse(res.data);
-                    myStore.$patch({ isLogin: true });
-                    myStore.$patch({ customer: customer });
-                    //login success and set token
-                    setToken(customer.token);
-                    loginMsg.value = '';
-                    toHomeFunction();
+                    alert(123);
                 })
                 .catch(err => {
                     //login fail and set msg
@@ -84,17 +72,11 @@ export default {
 
         const loginValid = () => {
             if (isEmpty(loginDto.username) || isEmpty(loginDto.password)) {
-                loginMsg.value = "使用者名稱和帳號為必填"
+                loginMsg.value = "使用者名稱和密碼為必填"
                 return false;
             } else {
                 return true;
             }
-        }
-
-        const oauth = () =>{
-            oauth2().then(res => {
-                console.log(res);
-            })
         }
 
         function isEmpty(str) {
@@ -106,7 +88,6 @@ export default {
             loginFunction,
             loginDto,
             loginMsg,
-            oauth
         }
 
     }
@@ -114,14 +95,7 @@ export default {
 </script>
 
 <style scoped>
-.gradient-custom {
-    /* fallback for old browsers */
-    background: #6a11cb;
 
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
 
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
-}
+
 </style>

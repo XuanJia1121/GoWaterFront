@@ -1,32 +1,22 @@
 import axios from 'axios'
 
 const baseAPI = axios.create({
-  baseURL: 'http://localhost:8087/',
+  baseURL: 'http://localhost:8087/api/',
   headers: {
     "Content-Type": "application/json",
     accept: "application/json",
   },
 });
 
+//登入
 export const apiLoginAction = (customerJsonStr) => {
-  return baseAPI.post('/customer/loginAction',customerJsonStr);
+  return baseAPI.post('/customer/login',customerJsonStr);
 };
 
+//查所有商品
 export const allProductAction = () => {
   return baseAPI.get('/product/all');
 };
-
-export const allOrders = (customer) => {
-  return baseAPI.get('/orders/allOrders',customer);
-}
-
-export const addOrderAction = (order) => {
-  return baseAPI.post('/orders/addOrder',order);
-}
-
-export const oauth2 = () => {
-  return baseAPI.get('/oauth2/authorization/google');
-}
 
 // 攔截請求set token
 baseAPI.interceptors.request.use(config => {
