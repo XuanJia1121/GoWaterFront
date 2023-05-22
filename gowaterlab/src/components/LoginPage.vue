@@ -16,11 +16,11 @@
                                         </h5>
                                         <div class="form-outline mb-4">
                                             <input v-model="loginDto.username" type="email" class="form-control form-control-lg" />
-                                            <label class="form-label mt-1" for="form2Example17">使用者名稱</label>
+                                            <label class="form-label mt-1">使用者名稱</label>
                                         </div>
                                         <div class="form-outline mb-4">
                                             <input v-model="loginDto.password" type="password" class="form-control form-control-lg" />
-                                            <label class="form-label mt-1" for="form2Example27">密碼</label>
+                                            <label class="form-label mt-1">密碼</label>
                                         </div>
                                         <p v-if="loginMsg" class="mb-5 pb-lg-2 text-danger">{{ loginMsg }}</p>
                                         <div class="pt-1 mb-4">
