@@ -27,10 +27,4 @@ baseAPI.interceptors.request.use(config => {
     return Promise.reject(error)
 })
 
-// 攔截回復
-baseAPI.interceptors.response.use(res => {
-  res.data = JSON.stringify(res.data);
-  return res;
-})
-
 

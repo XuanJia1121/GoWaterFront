@@ -45,7 +45,7 @@
 import { useStore } from "@/store/index";
 import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
-import { login } from "../hooks/useCustomer"
+import { login , loginSuccess } from "../hooks/useCustomer"
 
 export default {
 
@@ -59,14 +59,15 @@ export default {
 
         const loginFunction = () => {
             if (!loginValid()) return;
-            alert(123);
             login(loginDto)
                 .then(res => {
-                    alert(123);
-                })
-                .catch(err => {
-                    //login fail and set msg
-                    loginMsg.value = err.response.data;
+                    const code = res.data.statuscode;
+                    if (code === '200') {
+                        loginSuccess(JSON.parse(res.data.value));
+                        toHomeFunction();
+                    } else {
+                        loginMsg.value = res.data.value;
+                    }
                 })
         }
 

@@ -19,14 +19,20 @@
                 </form>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                    <a class="nav-link" href="#">Pull request</a>
+                    <a class="nav-link" href="#">購物車</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">Issues</a>
+                    <a class="nav-link" href="#">我的訂單</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav d-flex flex-row ms-auto me-3">
+                <ul v-if="!myStore.isLogin" class="navbar-nav d-flex flex-row ms-auto me-3">
                    <button @click="toLoginPageFunction" class="btn btn-danger">登入</button>
+                </ul>
+                <ul v-else class="navbar-nav d-flex flex-row ms-auto me-3">
+                   <h5 class="text-danger m-auto">歡迎光臨，{{myStore.customer.username}}</h5>
+                </ul>
+                <ul v-if="myStore.isLogin" class="navbar-nav d-flex flex-row ms-auto me-3">
+                   <button @click="logoutToHome" class="btn btn-info">登出</button>
                 </ul>
                 </div>
             </div>
@@ -44,7 +50,7 @@
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <div class="col mb-5">
+                    <div v-for="product in myStore.products" class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
                             <img class="card-img-top" src="../assets/logo.png" alt="..." />
@@ -52,71 +58,14 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">Fancy Product</h5>
+                                    <h5 class="fw-bolder">{{product.pname}}</h5>
                                     <!-- Product price-->
-                                    $40.00 - $80.00
+                                    ${{product.price}}
                                 </div>
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="../assets/logo.png" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Fancy Product</h5>
-                                    <!-- Product price-->
-                                    $40.00 - $80.00
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="../assets/logo.png" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Fancy Product</h5>
-                                    <!-- Product price-->
-                                    $40.00 - $80.00
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="../assets/logo.png" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">Fancy Product</h5>
-                                    <!-- Product price-->
-                                    $40.00 - $80.00
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">加入購物車</a></div>
                             </div>
                         </div>
                     </div>
@@ -125,7 +74,7 @@
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; xuan's vue lab 2023</p></div>
+            <div class="container"><p class="m-0 text-center text-white">CopyRight &copy; xuan's vue lab 2023</p></div>
         </footer>
 
 </template>
@@ -134,22 +83,34 @@
 
 import { useRouter } from "vue-router";
 import { useStore } from "@/store/index";
-import { addToCart, initProduct, addAlert } from '../hooks/useProduct'
+import { initProducts } from '../hooks/useProduct'
+import { onMounted , reactive , onBeforeMount } from "vue";
+import { logout } from "../hooks/useCustomer"
 
 export default {
 
     setup() {
 
-        
         const myStore = useStore(); //all store
         const router = useRouter(); //vue router
         const toHomePageFunction = () => router.push({ name: 'home' }); //to home Page
         const toLoginPageFunction = () => router.push({ name: 'login' }); //to home Page
 
+        //init products
+        onBeforeMount(async () => {
+          await initProducts();
+        })
+
+        const logoutToHome = () => {
+            logout();
+            toHomePageFunction();
+        }
+
         return {
             myStore,
             toHomePageFunction,
-            toLoginPageFunction
+            toLoginPageFunction,
+            logoutToHome
         }
 
     }
@@ -176,4 +137,5 @@ export default {
 .jom {
     background-color: rgb(152, 186, 214);
 }
+
 </style>
