@@ -28,7 +28,12 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: ()=> import('@/components/LoginPage.vue'),
+    component: ()=> import('@/components/LoginPage.vue')
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: ()=> import('@/components/Cart.vue'),
     beforeEnter: requireAuth
   },
 

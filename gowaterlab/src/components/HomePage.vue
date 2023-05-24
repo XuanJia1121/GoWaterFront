@@ -19,7 +19,7 @@
                 </form>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                    <a class="nav-link" href="#">購物車</a>
+                    <a @click="toCartPageFunction" class="nav-link">購物車</a>
                     </li>
                     <li class="nav-item">
                     <a class="nav-link" href="#">我的訂單</a>
@@ -65,7 +65,9 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">加入購物車</a></div>
+                                <div class="text-center">
+                                    <button @click="addProductToCart(product)" class="btn btn-outline-dark mt-auto">加入購物車</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -83,7 +85,7 @@
 
 import { useRouter } from "vue-router";
 import { useStore } from "@/store/index";
-import { initProducts } from '../hooks/useProduct'
+import { initProducts , addProductToCart } from '../hooks/useProduct'
 import { onMounted , reactive , onBeforeMount } from "vue";
 import { logout } from "../hooks/useCustomer"
 
@@ -95,6 +97,7 @@ export default {
         const router = useRouter(); //vue router
         const toHomePageFunction = () => router.push({ name: 'home' }); //to home Page
         const toLoginPageFunction = () => router.push({ name: 'login' }); //to home Page
+        const toCartPageFunction = () => router.push({ name: 'cart' }); //to home Page
 
         //init products
         onBeforeMount(async () => {
@@ -110,7 +113,9 @@ export default {
             myStore,
             toHomePageFunction,
             toLoginPageFunction,
-            logoutToHome
+            toCartPageFunction,
+            logoutToHome,
+            addProductToCart
         }
 
     }

@@ -10,7 +10,13 @@ export const useStore = defineStore('customerStore', {
   }),
 
   getters: {
-     
+     cartTotal : (state) => {
+      let sum = 0;
+      state.cart.forEach(p => {
+        sum += p.price * p.quantity;
+      })
+      return sum;
+     }
   },
 
   actions: {

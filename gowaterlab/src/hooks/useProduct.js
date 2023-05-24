@@ -7,3 +7,17 @@ export async function initProducts() {
     myStore.products = JSON.parse(res.data.value);
 }
 
+export function addProductToCart(product) {
+    const myStore = useStore();
+    const cart = myStore.cart;
+    const found = cart.find(element => element.pid == product.pid);
+    if (found == null) {
+        cart.push({
+            ...product,
+            quantity:1
+        });
+    } else {
+        found.quantity += 1;
+    }
+}
+
