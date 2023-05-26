@@ -4,6 +4,7 @@ import { createRouter , createWebHistory } from 'vue-router'
 const requireAuth = (to, from, next) => {
   if (to.meta.auth) {
     const token = sessionStorage.getItem('myToken');
+    console.log(token);
     if (token) {
       next();
     } else {
@@ -34,7 +35,10 @@ const routes = [
     path: '/cart',
     name: 'cart',
     component: ()=> import('@/components/Cart.vue'),
-    beforeEnter: requireAuth
+    meta:{
+      auth:true
+    },
+    beforeEnter: requireAuth,
   },
 
 ]

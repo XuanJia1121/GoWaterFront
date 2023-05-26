@@ -87,7 +87,7 @@ import { useRouter } from "vue-router";
 import { useStore } from "@/store/index";
 import { initProducts , addProductToCart } from '../hooks/useProduct'
 import { onMounted , reactive , onBeforeMount } from "vue";
-import { logout } from "../hooks/useCustomer"
+import { logout , getOrders } from "../hooks/useCustomer"
 
 export default {
 
@@ -102,6 +102,10 @@ export default {
         //init products
         onBeforeMount(async () => {
           await initProducts();
+          console.log(myStore.customer.cid);
+          getOrders(myStore.customer.cid).then(res => {
+            console.log(res);
+          })
         })
 
         const logoutToHome = () => {

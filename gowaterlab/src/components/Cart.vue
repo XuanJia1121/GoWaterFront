@@ -42,7 +42,7 @@
                         <div class="col">TOTAL PRICE</div>
                         <div class="col text-right">${{ myStore.cartTotal }}</div>
                     </div>
-                    <button class="btn">結帳</button>
+                    <button @click="checkOut" class="btn">結帳</button>
                 </div>
             </div>
         </div>
@@ -55,6 +55,7 @@
 
 import { useRouter } from "vue-router";
 import { useStore } from "@/store/index";
+import { addOrder , resetCart } from "../hooks/useCustomer"
 
 export default {
 
@@ -64,8 +65,27 @@ export default {
         const toHomePageFunction = () => router.push({ name: 'home' }); //to home Page
         const myStore = useStore(); //pinia store
 
+        const checkOut = () => {
+            let cart = myStore.cart;
+            const order = {
+                cid:myStore.customer.cid,
+                cart:JSON.stringify(cart),
+                price:myStore.cartTotal
+            }
+            console.log(order);
+            addOrder(order).then(res => {
+                if (res.data.statuscode === '200') {
+                    resetCart();
+                    alert(res.data.value);
+                } else {
+                    alert(res.data.value);
+                }
+            })
+        }
+
         return {
             myStore,
+            checkOut,
             toHomePageFunction
         }
 
