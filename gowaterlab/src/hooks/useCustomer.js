@@ -25,7 +25,17 @@ export function logout() {
 
 //訂單
 export function getOrders(cid) {
-    return allOrderAction(cid);
+    const myStore = useStore();
+    const orderRes =  allOrderAction(cid);
+    orderRes.then(res => {
+        if (res.data.statuscode === '200') {
+            myStore.orders = JSON.parse(res.data.value);
+            console.log(myStore.orders);
+            console.log('get order success');
+        } else {
+            console.log('get order fail');
+        }
+    })
 }
 
 //新增訂單

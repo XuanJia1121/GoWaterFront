@@ -40,6 +40,15 @@ const routes = [
     },
     beforeEnter: requireAuth,
   },
+  {
+    path: '/order',
+    name: 'order',
+    component: ()=> import('@/components/OrderList.vue'),
+    meta:{
+      auth:true
+    },
+    beforeEnter: requireAuth,
+  },
 
 ]
 

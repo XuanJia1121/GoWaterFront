@@ -5,6 +5,7 @@ export const useStore = defineStore('customerStore', {
   state: () => ({
     customer:{},
     cart:[],
+    orders:[],
     products:[],
     isLogin:false,
   }),

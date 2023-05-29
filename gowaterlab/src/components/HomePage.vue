@@ -22,7 +22,7 @@
                     <a @click="toCartPageFunction" class="nav-link">購物車</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">我的訂單</a>
+                    <a @click="toOrderPageFunction" class="nav-link">我的訂單</a>
                     </li>
                 </ul>
                 <ul v-if="!myStore.isLogin" class="navbar-nav d-flex flex-row ms-auto me-3">
@@ -98,14 +98,11 @@ export default {
         const toHomePageFunction = () => router.push({ name: 'home' }); //to home Page
         const toLoginPageFunction = () => router.push({ name: 'login' }); //to home Page
         const toCartPageFunction = () => router.push({ name: 'cart' }); //to home Page
+        const toOrderPageFunction = () => router.push({ name: 'order' }); //to home Page
 
         //init products
         onBeforeMount(async () => {
           await initProducts();
-          console.log(myStore.customer.cid);
-          getOrders(myStore.customer.cid).then(res => {
-            console.log(res);
-          })
         })
 
         const logoutToHome = () => {
@@ -118,6 +115,7 @@ export default {
             toHomePageFunction,
             toLoginPageFunction,
             toCartPageFunction,
+            toOrderPageFunction,
             logoutToHome,
             addProductToCart
         }
