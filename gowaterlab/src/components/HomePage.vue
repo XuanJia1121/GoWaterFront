@@ -97,8 +97,15 @@ export default {
         const router = useRouter(); //vue router
         const toHomePageFunction = () => router.push({ name: 'home' }); //to home Page
         const toLoginPageFunction = () => router.push({ name: 'login' }); //to home Page
-        const toCartPageFunction = () => router.push({ name: 'cart' }); //to home Page
         const toOrderPageFunction = () => router.push({ name: 'order' }); //to home Page
+
+        const toCartPageFunction = () => {
+            if (myStore.cart.length <= 0) {
+                alert("購物車是空的");
+                return;
+            }
+            router.push({ name: 'cart' });
+        }
 
         //init products
         onBeforeMount(async () => {

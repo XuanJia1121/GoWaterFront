@@ -13,36 +13,30 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"
+                                            <img src="../assets/logo.png"
                                                 class="img-fluid" alt="Phone">
                                         </div>
                                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0">{{myOrder.id}}</p>
+                                            <p class="text-muted mb-0">訂單編號:{{myOrder.id}}</p>
                                         </div>
                                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">Qty:{{JSON.parse(myOrder.cart).length}}</p>
+                                            <p class="text-muted mb-0 small">商品數量:{{JSON.parse(myOrder.cart).length}}</p>
                                         </div>
-                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small"></p>
+                                        <div class="col-md-5 text-center d-flex justify-content-center align-items-center">
+                                            <p v-for="p in JSON.parse(myOrder.cart)" :key="p" class="text-muted mb-0 small">
+                                                {{p.pname}}:{{p.quantity}}、
+                                            </p>
                                         </div>
-                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small"></p>
-                                        </div>
-                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                        <div class="col-md-1 text-center d-flex justify-content-center align-items-center">
                                             <p class="text-muted mb-0 small">${{myOrder.price}}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between pt-2">
-                                <p class="fw-bold mb-0">Order Details</p>
-                                <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $898.00</p>
-                            </div>
                         </div>
                         <div class="card-footer border-0 px-4 py-5"
                             style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-                            <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
-                                paid: <span class="h2 mb-0 ms-2">$1040</span></h5>
+                            <button @click="toHomePageFunction" class="btn btn-white">Back To Home</button>
                         </div>
                     </div>
                 </div>
@@ -64,13 +58,16 @@ export default {
 
         const myStore = useStore(); //all store
         const router = useRouter(); //vue router
+        const toHomePageFunction = () => router.push({ name: 'home' }); //to home Page
 
         onBeforeMount(async()=>{
             getOrders(myStore.customer.cid);
         })
 
+
         return {
-            myStore
+            myStore,
+            toHomePageFunction
         };
 
     }
